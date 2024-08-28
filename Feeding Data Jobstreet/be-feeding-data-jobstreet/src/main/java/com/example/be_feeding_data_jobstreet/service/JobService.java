@@ -13,6 +13,9 @@ import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import jakarta.validation.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -34,8 +37,9 @@ public class JobService {
     @Autowired
     private Validator validator;
 
-    public List<Job> getAllJobs() {
-        return jobRepository.findAll();
+    public Page<Job> getAllJobs(int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+        return jobRepository.findAll(pageable);
     }
 
     public Job addNewJob(AddJobRequestDTO addJobRequestDTO) {

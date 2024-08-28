@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.pagination {
+  @apply flex justify-center my-3 py-3;
+}
+
+.pagination ul {
+  @apply inline-flex justify-center;
+}
+
+.pagination ul li {
+  @apply p-[1em] mx-1 rounded-md hover:bg-slate-200;
+}
+
+.pagination ul li.active {
+  @apply bg-slate-700 text-white active:font-bold;
+}
+
+.pagination ul li:first-child,
+.pagination ul li:last-child {
+  @apply bg-transparent hover:bg-slate-200;
+}

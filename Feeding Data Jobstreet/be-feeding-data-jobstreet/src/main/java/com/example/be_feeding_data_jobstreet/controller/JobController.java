@@ -6,6 +6,7 @@ import com.example.be_feeding_data_jobstreet.model.UpdateJobRequestDTO;
 import com.example.be_feeding_data_jobstreet.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.InputStreamResource;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,14 +17,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/job")
+@CrossOrigin(origins = "http://localhost:5173")
 public class JobController {
 
     @Autowired
     private JobService jobService;
 
     @GetMapping()
-    public ResponseEntity<List<Job>> getAllJob(){
-        return ResponseEntity.ok(jobService.getAllJobs());
+    public ResponseEntity<Page<Job>> getAllJob(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+        return ResponseEntity.ok(jobService.getAllJobs(page, size));
     }
 
     @GetMapping("/generate-excel")
@@ -38,7 +40,7 @@ public class JobController {
     }
 
     @PostMapping()
-    public ResponseEntity<Job> addNewJob(@RequestBody AddJobRequestDTO addJobRequestDTO){
+    public ResponseEntity<Job> addNewJob(@RequestBody AddJobRequestDTO addJobRequestDTO) {
         return ResponseEntity.ok(jobService.addNewJob(addJobRequestDTO));
     }
 
@@ -48,12 +50,12 @@ public class JobController {
     }
 
     @PostMapping("/generate")
-    public ResponseEntity<List<Job>> generateJob(@RequestParam Long tagId){
+    public ResponseEntity<List<Job>> generateJob(@RequestParam Long tagId) {
         return ResponseEntity.ok(jobService.generateJobs(tagId));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteJob(@PathVariable("id") String jobId){
+    public ResponseEntity<String> deleteJob(@PathVariable("id") String jobId) {
         jobService.deleteJob(jobId);
         return ResponseEntity.ok("Job Successfully Deleted");
     }
