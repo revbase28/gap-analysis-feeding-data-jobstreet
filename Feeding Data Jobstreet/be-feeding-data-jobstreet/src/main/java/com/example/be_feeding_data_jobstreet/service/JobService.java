@@ -42,6 +42,11 @@ public class JobService {
         return jobRepository.findAll(pageable);
     }
 
+    public Page<Job> getAllJobsByTags(int page, int size, Long tagId){
+        Pageable pageable = PageRequest.of(page, size);
+        return jobRepository.findAllByTag(pageable, tagId);
+    }
+
     public Job addNewJob(AddJobRequestDTO addJobRequestDTO) {
         Set<ConstraintViolation<AddJobRequestDTO>> constraintViolations = validator.validate(addJobRequestDTO);
 
@@ -70,7 +75,7 @@ public class JobService {
         return jobRepository.save(newJob);
     }
 
-    public List<Job> generateJobs(Long tagId) {
+    public List<Job> generateJobs(Long tagId) throws Exception {
         Optional<JobTag> optJobTag = jobTagRepository.findById(tagId);
 
         if(optJobTag.isEmpty()){
@@ -91,7 +96,8 @@ public class JobService {
                     job.setJobTags(jobTags);
                     Job insertedJob = jobRepository.save(job);
                     successfullyInsertedJobs.add(insertedJob);
-                } catch (Exception ignored) {
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -149,6 +155,11 @@ public class JobService {
 
     public ByteArrayInputStream generateExcel() throws IOException {
         List<Job> jobs = jobRepository.findAll();
+        return Tools.generateExcel(jobs);
+    }
+
+    public ByteArrayInputStream generateExcel(Long tagId) throws IOException {
+        List<Job> jobs = jobRepository.findAllByTag(tagId);
         return Tools.generateExcel(jobs);
     }
 }

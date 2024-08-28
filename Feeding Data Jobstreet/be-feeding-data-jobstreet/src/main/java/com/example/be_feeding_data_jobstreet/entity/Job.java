@@ -23,19 +23,19 @@ public class Job {
     @Id
     private String id;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 100, nullable = false)
     private String jobTitle;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 100, nullable = false)
     private String companyName;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 100, nullable = false)
     private String jobLocation;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 100, nullable = false)
     private String salary;
 
-    @Column(length = 50, nullable = false)
+    @Column(length = 100, nullable = false)
     private String workType;
 
     @Column(nullable = false)

@@ -24,19 +24,28 @@ public class JobController {
     private JobService jobService;
 
     @GetMapping()
-    public ResponseEntity<Page<Job>> getAllJob(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size) {
+    public ResponseEntity<Page<Job>> getAllJob(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "10") int size,
+            @RequestParam(required = false) Long tagId) {
+
+        if (tagId != null) {
+            return ResponseEntity.ok(jobService.getAllJobsByTags(page, size, tagId));
+        }
         return ResponseEntity.ok(jobService.getAllJobs(page, size));
     }
 
     @GetMapping("/generate-excel")
-    public ResponseEntity<InputStreamResource> exportToExcel() throws IOException {
+    public ResponseEntity<InputStreamResource> exportToExcel(
+            @RequestParam(required = false) Long tagId
+    ) throws IOException {
         HttpHeaders httpHeaders = new HttpHeaders();
         httpHeaders.add("Content-Disposition", "attachment; filename=jobs.xlsx");
 
         return ResponseEntity.ok()
                 .headers(httpHeaders)
                 .contentType(MediaType.APPLICATION_OCTET_STREAM)
-                .body(new InputStreamResource(jobService.generateExcel()));
+                .body(tagId != null ? new InputStreamResource(jobService.generateExcel(tagId)) : new InputStreamResource(jobService.generateExcel()));
     }
 
     @PostMapping()
@@ -50,7 +59,7 @@ public class JobController {
     }
 
     @PostMapping("/generate")
-    public ResponseEntity<List<Job>> generateJob(@RequestParam Long tagId) {
+    public ResponseEntity<List<Job>> generateJob(@RequestParam Long tagId) throws Exception {
         return ResponseEntity.ok(jobService.generateJobs(tagId));
     }
 

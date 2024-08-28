@@ -9,6 +9,7 @@ interface JobState {
   error: string | null;
   totalPages: number;
   currentPage: number;
+  activeFilter: number;
 }
 
 const initialState: JobState = {
@@ -17,15 +18,22 @@ const initialState: JobState = {
   error: null,
   totalPages: 0,
   currentPage: 0,
+  activeFilter: -1,
 };
 
 export const fetchData = createAsyncThunk(
   "job/fetchData",
-  async (page: number) => {
+  async ({ page, activeFilter }: { page: number; activeFilter: number }) => {
     const params = {
-      params: {
-        page: page,
-      },
+      params:
+        activeFilter == -1
+          ? {
+              page: page,
+            }
+          : {
+              page: page,
+              tagId: activeFilter,
+            },
     };
 
     const response = await axios.get(base_url + "job", params);
@@ -45,6 +53,7 @@ const jobSlice = createSlice({
   name: "job",
   initialState: initialState,
   reducers: {
+    // Page related
     nextPage: (state) => {
       state.currentPage =
         state.currentPage != state.totalPages - 1
@@ -57,6 +66,12 @@ const jobSlice = createSlice({
     },
     toPage: (state, action: PayloadAction<number>) => {
       state.currentPage = action.payload;
+    },
+
+    // Filter related
+    changeFilter: (state, action: PayloadAction<number>) => {
+      state.currentPage = 0;
+      state.activeFilter = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -78,4 +93,4 @@ const jobSlice = createSlice({
 });
 
 export default jobSlice.reducer;
-export const { nextPage, prevPage, toPage } = jobSlice.actions;
+export const { nextPage, prevPage, toPage, changeFilter } = jobSlice.actions;

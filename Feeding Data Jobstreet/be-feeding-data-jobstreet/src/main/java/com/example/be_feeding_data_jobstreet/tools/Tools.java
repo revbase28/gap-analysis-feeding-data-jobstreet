@@ -29,7 +29,7 @@ import java.util.Set;
 
 public class Tools {
 
-    public static JsonArray scrapeJobData(String keyword) {
+    public static JsonArray scrapeJobData(String keyword) throws Exception {
         try {
             String cleanse = keyword.trim().replace(" ", "-");
 
@@ -60,9 +60,8 @@ public class Tools {
 
         } catch (Exception e) {
             e.printStackTrace();
+            throw e;
         }
-
-        return null;
     }
 
     public static ByteArrayInputStream generateExcel(List<Job> jobs) throws IOException {

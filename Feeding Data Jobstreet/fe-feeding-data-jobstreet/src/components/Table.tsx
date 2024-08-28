@@ -6,13 +6,13 @@ import { fetchData } from "../state/job/jobSlice";
 
 export const Table = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const { data, loading, error, currentPage } = useSelector(
+  const { data, loading, error, currentPage, activeFilter } = useSelector(
     (state: RootState) => state.job
   );
 
   useEffect(() => {
-    dispatch(fetchData(currentPage));
-  }, [dispatch, currentPage]);
+    dispatch(fetchData({ page: currentPage, activeFilter: activeFilter }));
+  }, [dispatch, currentPage, activeFilter]);
 
   if (loading) {
     return <p className="text-red-400">Loading</p>;

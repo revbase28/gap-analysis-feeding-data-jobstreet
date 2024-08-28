@@ -22,3 +22,21 @@
 .pagination ul li:last-child {
   @apply bg-transparent hover:bg-slate-200;
 }
+
+.overlay {
+  @apply fixed inset-0 bg-gray-900 bg-opacity-50 flex justify-center items-center;
+}
+
+.form-group {
+  @apply my-4;
+}
+
+.form-group label {
+  @apply block my-2;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+  @apply block border border-slate-700 w-full px-2 py-2 bg-slate-50 rounded-md;
+}
