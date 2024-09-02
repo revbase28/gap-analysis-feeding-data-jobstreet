@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  @apply m-3;
+}
+
 .pagination {
   @apply flex justify-center my-3 py-3;
 }

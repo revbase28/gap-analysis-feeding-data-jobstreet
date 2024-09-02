@@ -25,7 +25,6 @@ public class AddJobRequestDTO {
     @NotBlank
     private String jobLocation;
 
-    @NotBlank
     private String salary;
 
     @NotBlank

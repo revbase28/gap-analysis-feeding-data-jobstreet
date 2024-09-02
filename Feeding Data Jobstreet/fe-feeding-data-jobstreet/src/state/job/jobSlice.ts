@@ -29,9 +29,11 @@ export const fetchData = createAsyncThunk(
         activeFilter == -1
           ? {
               page: page,
+              size: 15,
             }
           : {
               page: page,
+              size: 15,
               tagId: activeFilter,
             },
     };

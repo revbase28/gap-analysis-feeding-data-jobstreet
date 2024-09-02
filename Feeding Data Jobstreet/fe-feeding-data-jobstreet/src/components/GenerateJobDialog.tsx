@@ -34,6 +34,7 @@ export const GenerateJobDialog = () => {
         tagId: tag,
       },
     };
+
     try {
       await axios.post(base_url + "job/generate", null, params);
 

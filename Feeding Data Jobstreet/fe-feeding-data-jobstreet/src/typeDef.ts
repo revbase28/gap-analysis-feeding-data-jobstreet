@@ -4,12 +4,12 @@ export interface JobTag {
 }
 
 export interface JobData {
-  id: String;
-  jobTitle: String;
-  companyName: String;
-  jobLocation: String;
-  salary: String;
-  workType: String;
-  shortDesc: String;
+  id: string;
+  jobTitle: string;
+  companyName: string;
+  jobLocation: string;
+  salary: string;
+  workType: string;
+  shortDesc: string;
   jobTags: JobTag[];
 }

@@ -6,7 +6,10 @@ import { changeFilter } from "../state/job/jobSlice";
 import { exportJobToExcel } from "../state/job/exportJobSlice";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSpinner } from "@fortawesome/free-solid-svg-icons/faSpinner";
-import { openGenerateJobDialog } from "../state/dialog/dialogSlice";
+import {
+  openAddJobDialog,
+  openGenerateJobDialog,
+} from "../state/dialog/dialogSlice";
 
 export const DashboardHeader = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -62,7 +65,10 @@ export const DashboardHeader = () => {
             >
               Generate Job
             </button>
-            <button className="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 p-2 text-center mr-1 min-w-[5em] rounded-md text-white">
+            <button
+              onClick={() => dispatch(openAddJobDialog())}
+              className="bg-blue-500 hover:bg-blue-600 active:bg-blue-700 p-2 text-center mr-1 min-w-[5em] rounded-md text-white"
+            >
               Add New Job
             </button>
           </div>

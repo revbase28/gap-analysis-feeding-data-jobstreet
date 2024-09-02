@@ -4,12 +4,16 @@ interface GenerateJobDialogState {
   isGenerateJobDialogShown: boolean;
   isEditJobDialogShown: boolean;
   isAddJobDialogShown: boolean;
+  isDeleteConfirmatioDialogShown: boolean;
+  isDetailJobDialogShown: boolean;
 }
 
 const initialState: GenerateJobDialogState = {
   isGenerateJobDialogShown: false,
-  isAddJobDialogShown: true,
+  isAddJobDialogShown: false,
   isEditJobDialogShown: false,
+  isDeleteConfirmatioDialogShown: false,
+  isDetailJobDialogShown: false,
 };
 
 export const dialogSlice = createSlice({
@@ -34,6 +38,18 @@ export const dialogSlice = createSlice({
     closeEditJobDialog: (state) => {
       state.isEditJobDialogShown = false;
     },
+    openDeleteConfirmationDialog: (state) => {
+      state.isDeleteConfirmatioDialogShown = true;
+    },
+    closeDeleteConfirmationDialog: (state) => {
+      state.isDeleteConfirmatioDialogShown = false;
+    },
+    openDetailJobDialog: (state) => {
+      state.isDetailJobDialogShown = true;
+    },
+    closeDetailJobDialog: (state) => {
+      state.isDetailJobDialogShown = false;
+    },
   },
 });
 
@@ -45,4 +61,8 @@ export const {
   closeAddJobDialog,
   openEditJobDialog,
   closeEditJobDialog,
+  openDeleteConfirmationDialog,
+  closeDeleteConfirmationDialog,
+  openDetailJobDialog,
+  closeDetailJobDialog,
 } = dialogSlice.actions;
