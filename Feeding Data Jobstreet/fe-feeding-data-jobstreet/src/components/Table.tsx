@@ -17,6 +17,17 @@ import {
   faTrash,
 } from "@fortawesome/free-solid-svg-icons";
 
+const NoDataScreen = () => {
+  return (
+    <div className="flex items-center justify-center h-[70vh] bg-gray-100">
+      <div className="text-center">
+        <h2 className="text-2xl font-semibold text-gray-700">No Data Available</h2>
+        <p className="mt-2 text-gray-500">There is currently no data to display.</p>
+      </div>
+    </div>
+  );
+};
+
 export const Table = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { data, loading, error, currentPage, activeFilter } = useSelector(
@@ -29,6 +40,10 @@ export const Table = () => {
 
   if (error) {
     return <p>Error: {error}</p>;
+  }
+
+  if(data.length == 0) {
+    return NoDataScreen();
   }
 
   return (
@@ -56,7 +71,7 @@ export const Table = () => {
               <td>{job.companyName}</td>
               <td>{job.jobLocation}</td>
               <td>{job.salary}</td>
-              <td>{job.jobTags[0].tag_desc}</td>
+              <td className="text-center">{job.jobTags[0].tag_desc}</td>
               <td>
                 <div className="flex justify-center">
                   <button
